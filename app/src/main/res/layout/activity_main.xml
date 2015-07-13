@@ -370,7 +370,7 @@
             <ImageView
                 android:gravity="center"
                 android:textStyle="bold"
-                android:src="@drawable/clients"
+                android:src="@drawable/products"
                 android:textColor="#ffffff"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
