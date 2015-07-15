@@ -108,7 +108,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="10dp"
                 android:textColor="#fff"
-                android:text="Business"
+                android:text="Companies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -380,7 +380,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="10dp"
                 android:textColor="#fff"
-                android:text="Product"
+                android:text="Products"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
