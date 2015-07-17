@@ -13,7 +13,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class NewClients extends ActionBarActivity {
     TextView txtTitle;
-    ImageView imgClose;
+    ImageView imgClose,imgBack;
     ListView listView;
     MaterialSpinner spCType,spGender,spMStatus;
     String[] ClientType = {"Individual","Company (fleet)"};
@@ -32,6 +32,15 @@ public class NewClients extends ActionBarActivity {
         spCType = (MaterialSpinner)findViewById(R.id.spCType);
         spGender = (MaterialSpinner)findViewById(R.id.spGender);
         spMStatus = (MaterialSpinner)findViewById(R.id.spMStatus);
+
+        imgBack = (ImageView)findViewById(R.id.imgBack);
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ArrayAdapter<String> ClientTypeadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ClientType);
         ClientTypeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

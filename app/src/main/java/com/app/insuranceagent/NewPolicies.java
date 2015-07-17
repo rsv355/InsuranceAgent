@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class NewPolicies extends ActionBarActivity {
     TextView txtTitle;
-    ImageView imgClose;
+    ImageView imgClose,imgBack;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +22,14 @@ public class NewPolicies extends ActionBarActivity {
 
     private void init(){
         imgClose = (ImageView)findViewById(R.id.imgClose);
+        imgBack = (ImageView)findViewById(R.id.imgBack);
 
-
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,6 +38,7 @@ public class NewPolicies extends ActionBarActivity {
         });
 
     }
+
 
     //end of main class
 }
