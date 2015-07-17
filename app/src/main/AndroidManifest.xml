@@ -48,6 +48,52 @@
             android:name=".NewClients"
             android:screenOrientation="portrait"/>
 
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".SearchAppointments"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".NewAppointments"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".SearchPolicies"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".NewPolicies"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".SearchClaims"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".NewClaims"
+            android:screenOrientation="portrait"/>
+
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".Statisitcs"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".Backup"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".Products"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

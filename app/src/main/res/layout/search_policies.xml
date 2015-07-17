@@ -1,0 +1,140 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:background="#2196F3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_back"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    <TextView
+        android:textStyle="bold"
+        android:paddingLeft="8dp"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:text="Policies"
+        android:textColor="#ffffff"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="48dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/spAgent"
+            app:ms_multiline="false"
+            app:ms_hint="Agent"
+            app:ms_floatingLabelText="Agent"
+            app:ms_baseColor="@color/base"
+            app:ms_highlightColor="@color/highlight"
+            app:ms_errorColor="@color/error"
+            app:ms_arrowColor="#2196F3"
+            app:ms_arrowSize="12dp"
+            app:ms_alignLabels="false"
+            app:ms_floatingLabelColor="#2196F3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/spCmp"
+            app:ms_multiline="false"
+            app:ms_hint="Company"
+            app:ms_floatingLabelText="Company"
+            app:ms_baseColor="@color/base"
+            app:ms_highlightColor="@color/highlight"
+            app:ms_errorColor="@color/error"
+            app:ms_arrowColor="#2196F3"
+            app:ms_arrowSize="12dp"
+            app:ms_alignLabels="false"
+            app:ms_floatingLabelColor="#2196F3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/spStatus"
+            app:ms_multiline="false"
+            app:ms_hint="Status"
+            app:ms_floatingLabelText="Status"
+            app:ms_baseColor="@color/base"
+            app:ms_highlightColor="@color/highlight"
+            app:ms_errorColor="@color/error"
+            app:ms_arrowColor="#2196F3"
+            app:ms_arrowSize="12dp"
+            app:ms_alignLabels="false"
+            app:ms_floatingLabelColor="#2196F3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+<LinearLayout
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+    <EditText
+        android:textSize="14dp"
+        android:textColorHint="#909599"
+        android:hint="Search..."
+        android:layout_marginLeft="8dp"
+        android:layout_weight="1"
+        android:id="@+id/edSearchBox"
+        android:textColor="#494949"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:padding="8dp"
+        android:src="@drawable/ic_action_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/imgNew"
+        android:padding="8dp"
+        android:src="@drawable/ic_content_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+    <View
+
+        android:background="#909599"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <ListView
+        android:background="#D8DFE6"
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+</LinearLayout>

@@ -192,6 +192,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearAppointments"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -223,6 +224,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearPolicies"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -254,6 +256,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearClaims"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -297,6 +300,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearStats"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -328,6 +332,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearBackup"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -359,6 +364,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearProducts"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
