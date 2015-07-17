@@ -75,6 +75,7 @@
 
     <!-- First row -->
     <LinearLayout
+        android:id="@+id/linearComp"
         android:layout_margin="8dp"
         android:layout_gravity="center"
         android:background="#E9E9E9"
@@ -115,6 +116,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearAgents"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -146,6 +148,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearClients"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"

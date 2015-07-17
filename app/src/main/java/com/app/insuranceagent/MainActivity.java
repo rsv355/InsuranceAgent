@@ -1,38 +1,51 @@
 package com.app.insuranceagent;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 
-public class MainActivity extends ActionBarActivity {
-
+public class MainActivity extends ActionBarActivity implements View.OnClickListener{
+    LinearLayout linearClients,linearComp,linearAgents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        init();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+  private void init(){
+      linearClients = (LinearLayout)findViewById(R.id.linearClients);
+      linearComp = (LinearLayout)findViewById(R.id.linearComp);
+      linearAgents = (LinearLayout)findViewById(R.id.linearAgents);
+
+      linearClients.setOnClickListener(this);
+      linearComp.setOnClickListener(this);
+      linearAgents.setOnClickListener(this);
+  }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.linearClients:
+                Intent i1 = new Intent(this,SearchClients.class);
+                i1.putExtra("title","Clients");
+                startActivity(i1);
+                break;
+            case R.id.linearComp:
+                Intent i2 = new Intent(this,SearchCompanies.class);
+                i2.putExtra("title","Insurance Companies");
+                startActivity(i2);
+                break;
+            case R.id.linearAgents:
+                Intent i3 = new Intent(this,SearchAgents.class);
+                i3.putExtra("title","Insurance Agents");
+                startActivity(i3);
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

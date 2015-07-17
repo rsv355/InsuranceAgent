@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <color name="base">#909599</color>
+    <color name="error">#D13B3D</color>
+
+    <color name="highlight">#3D599A</color>
+
+</resources>

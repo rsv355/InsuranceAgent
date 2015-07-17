@@ -1,0 +1,309 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#2196F3"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_back" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="Client"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="New"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:src="@drawable/ic_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/imgSave"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:src="@drawable/ic_content_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:background="#C0C6CC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#C0C6CC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="#ffffff"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_maxCharacters="20"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/spCType"
+                app:ms_multiline="false"
+                app:ms_hint="Select Client Type"
+                app:ms_floatingLabelText="Client Type"
+                app:ms_baseColor="@color/base"
+                app:ms_highlightColor="@color/highlight"
+                app:ms_errorColor="@color/error"
+
+                app:ms_arrowColor="#2196F3"
+                app:ms_arrowSize="12dp"
+                app:ms_alignLabels="false"
+                app:ms_floatingLabelColor="#2196F3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Birthday"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/spGender"
+                app:ms_multiline="false"
+                app:ms_hint="Select Gender"
+                app:ms_floatingLabelText="Gender"
+                app:ms_baseColor="@color/base"
+                app:ms_highlightColor="@color/highlight"
+                app:ms_errorColor="@color/error"
+
+                app:ms_arrowColor="#2196F3"
+                app:ms_arrowSize="12dp"
+                app:ms_alignLabels="false"
+                app:ms_floatingLabelColor="#2196F3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/spMStatus"
+                app:ms_multiline="false"
+                app:ms_hint="Select Marital Status"
+                app:ms_floatingLabelText="Marital Status"
+                app:ms_baseColor="@color/base"
+                app:ms_highlightColor="@color/highlight"
+                app:ms_errorColor="@color/error"
+
+                app:ms_arrowColor="#2196F3"
+                app:ms_arrowSize="12dp"
+                app:ms_alignLabels="false"
+                app:ms_floatingLabelColor="#2196F3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="example@gmail.com"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edCellPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="(###) ###-###"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edHomePhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="(###) ###-###"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edWorkPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="(###) ###-###"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edEmergencycontact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Emergency Contact"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edEmergencyPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="(###) ###-###"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+
+                app:met_textColorHint="#909599"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:id="@+id/edNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notes"
+                android:textSize="14sp"
+                app:met_baseColor="#494949"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="?colorAccent"/>
+
+        </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>
