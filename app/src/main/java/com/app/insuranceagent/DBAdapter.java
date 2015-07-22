@@ -23,7 +23,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_COMPANIES =
-            "create table COMPANIES (cmp_name text,cmp_address text,cmp_weburl text,cmp_notes text);";
+            "create table COMPANIES (cmp_id integer primary key autoincrement,cmp_name text,cmp_address text,cmp_weburl text,cmp_notes text);";
 
     private static final String Group_table =
             "create table Group_table (_id integer primary key autoincrement, "+
@@ -117,6 +117,18 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         DBHelper.close();
     }
 
+
+
+    public boolean updateCompanies(long cmp_id,String name,String add,String url,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("cmp_name", name);//1
+        initialValues.put("cmp_address", add);//2
+        initialValues.put("cmp_weburl", url);//3
+        initialValues.put("cmp_notes", notes);//3
+        return db.update("companies", initialValues, "cmp_id = " + cmp_id, null) > 0;
+    }
 
 
     public long insertCompanies(String name,String add,String url,String notes)

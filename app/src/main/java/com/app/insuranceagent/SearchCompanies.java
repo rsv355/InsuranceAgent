@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,7 +22,11 @@ public class SearchCompanies extends ActionBarActivity {
     ImageView imgBack,imgNew;
     ListView listView;
     DBAdapter db;
+    ArrayList<Integer> cmpID ;
     ArrayList<String> cmp ;
+    ArrayList<String> address ;
+    ArrayList<String> url ;
+    ArrayList<String> notes ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,12 @@ public class SearchCompanies extends ActionBarActivity {
 
     void processFetchCompanies(){
 
+        cmpID = new ArrayList<>();
+        address= new ArrayList<>();
+        url= new ArrayList<>();
+        notes= new ArrayList<>();
         cmp = new ArrayList<>();
+
         db.open();
         Cursor c = db.getALLCompaniesList();
         if (c.moveToFirst())
@@ -54,11 +64,32 @@ public class SearchCompanies extends ActionBarActivity {
         db.close();
 
         listView.setAdapter(new CustomAdapter(SearchCompanies.this, cmp));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent i1 = new Intent(SearchCompanies.this,NewCompany.class);
+
+                i1.putExtra("cmpID", cmpID.get(i));
+                i1.putExtra("cmpName", cmp.get(i));
+                i1.putExtra("cmpAddress",address.get(i));
+                i1.putExtra("cmpUrl",url.get(i));
+                i1.putExtra("cmpNotes",notes.get(i));
+                startActivity(i1);
+            }
+        });
+
+
     }
 
     private void FetchData(Cursor c)
     {
-        cmp.add(c.getString(0));
+        cmpID.add(c.getInt(0));
+        cmp.add(c.getString(1));
+        address.add(c.getString(2));
+        url.add(c.getString(3));
+        notes.add(c.getString(4));
+
     }
 
 
