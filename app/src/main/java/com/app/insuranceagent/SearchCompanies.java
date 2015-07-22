@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class SearchCompanies extends ActionBarActivity {
     ArrayList<String> address ;
     ArrayList<String> url ;
     ArrayList<String> notes ;
+    EditText edSearchBox;
+    ImageView imgSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,9 @@ public class SearchCompanies extends ActionBarActivity {
 
 
     private void init(){
+        edSearchBox = (EditText)findViewById(R.id.edSearchBox);
+        imgSearch = (ImageView)findViewById(R.id.imgSearch);
+
         imgNew = (ImageView)findViewById(R.id.imgNew);
         listView= (ListView)findViewById(R.id.listView);
         txtTitle = (TextView)findViewById(R.id.txtTitle);
