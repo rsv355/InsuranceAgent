@@ -22,11 +22,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
     private static final String DATABASE_TABLE_History = "D_Word_History";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_CREATE_HISTORY =
-            "create table D_Word_History (_id integer primary key autoincrement, "
-                    + "WORD String not null," +
-                    "MEANING text ,"+
-                    "GROUP_NAME text);";
+    private static final String DATABASE_COMPANIES =
+            "create table COMPANIES (cmp_name text,cmp_address text,cmp_weburl text,cmp_notes text);";
 
     private static final String Group_table =
             "create table Group_table (_id integer primary key autoincrement, "+
@@ -85,10 +82,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         public void onCreate(SQLiteDatabase db)
         {
             try {
-                db.execSQL(DATABASE_CREATE);
-                db.execSQL(DATABASE_CREATE_HISTORY);
-                db.execSQL(DATABASE_CREATE_WORD_OF_DAY);
-                db.execSQL(Group_table);
+                db.execSQL(DATABASE_COMPANIES);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -99,11 +94,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS D_Word_ENG_HIN");
-            db.execSQL("DROP TABLE IF EXISTS D_Word_History");
 
-            db.execSQL("DROP TABLE IF EXISTS D_Word_Word_Of_Day");
-            db.execSQL("DROP TABLE IF EXISTS Group_table");
+            db.execSQL("DROP TABLE IF EXISTS COMPANIES");
 
 
             onCreate(db);
@@ -125,20 +117,29 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         DBHelper.close();
     }
 
-    /*CATG_ID number not null," +
-            "WORD text not null," +
-            "MEANING_HIN text not null," +
-            "PRON_ENG ," +
-            "EX1 text ," +
-            "EX2 text ," +
-            "EX3 text ," +
-            "EX4 text ," +
-            "EX5 text ," +
-            "MATCH1 text ," +
-            "MATCH2 text ," +
-            "MATCH3 text ," +
-            "MATCH4 text ," +
-            "MATCH5 text );";*/
+
+
+    public long insertCompanies(String name,String add,String url,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("cmp_name", name);//1
+        initialValues.put("cmp_address", add);//2
+        initialValues.put("cmp_weburl", url);//3
+        initialValues.put("cmp_notes", notes);//3
+
+        Log.e("insert in companies ", "ok");
+
+        return db.insert("COMPANIES", null, initialValues);
+    }
+
+
+    public Cursor getALLCompaniesList() throws SQLException
+    {
+        String selectQuery = "SELECT * FROM companies";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
 
 
