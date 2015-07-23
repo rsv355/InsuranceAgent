@@ -15,7 +15,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.app.insuranceagent.model.Companies;
+import com.app.insuranceagent.model.SubCompanies;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 public class SearchCompanies extends ActionBarActivity {
@@ -23,13 +28,11 @@ public class SearchCompanies extends ActionBarActivity {
     ImageView imgBack,imgNew;
     ListView listView;
     DBAdapter db;
-    ArrayList<Integer> cmpID ;
-    ArrayList<String> cmp ;
-    ArrayList<String> address ;
-    ArrayList<String> url ;
-    ArrayList<String> notes ;
+
     EditText edSearchBox;
     ImageView imgSearch;
+    CustomAdapter adp;
+    ArrayList<SubCompanies> cmpObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +53,7 @@ public class SearchCompanies extends ActionBarActivity {
 
     void processFetchCompanies(){
 
-        cmpID = new ArrayList<>();
-        address= new ArrayList<>();
-        url= new ArrayList<>();
-        notes= new ArrayList<>();
-        cmp = new ArrayList<>();
+        cmpObj = new ArrayList<>();
 
         db.open();
         Cursor c = db.getALLCompaniesList();
@@ -66,18 +65,22 @@ public class SearchCompanies extends ActionBarActivity {
         }
         db.close();
 
-        listView.setAdapter(new CustomAdapter(SearchCompanies.this, cmp));
+        adp = new  CustomAdapter(SearchCompanies.this, cmpObj);
+
+        listView.setAdapter(adp);
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent i1 = new Intent(SearchCompanies.this,NewCompany.class);
 
-                i1.putExtra("cmpID", cmpID.get(i));
-                i1.putExtra("cmpName", cmp.get(i));
-                i1.putExtra("cmpAddress",address.get(i));
-                i1.putExtra("cmpUrl",url.get(i));
-                i1.putExtra("cmpNotes",notes.get(i));
+                i1.putExtra("cmpID", cmpObj.get(i).cmpID);
+                i1.putExtra("cmpName", cmpObj.get(i).cmpName);
+                i1.putExtra("cmpAddress",cmpObj.get(i).cmpAddress);
+                i1.putExtra("cmpUrl",cmpObj.get(i).cmpWebURL);
+                i1.putExtra("cmpNotes",cmpObj.get(i).cmpNotes);
                 startActivity(i1);
             }
         });
@@ -87,11 +90,16 @@ public class SearchCompanies extends ActionBarActivity {
 
     private void FetchData(Cursor c)
     {
-        cmpID.add(c.getInt(0));
-        cmp.add(c.getString(1));
-        address.add(c.getString(2));
-        url.add(c.getString(3));
-        notes.add(c.getString(4));
+        SubCompanies subCmp = new SubCompanies();
+        subCmp.cmpID = c.getInt(0);
+        subCmp.cmpName = c.getString(1);
+        subCmp.cmpAddress = c.getString(2);
+        subCmp.cmpWebURL = c.getString(3);
+        subCmp.cmpNotes = c.getString(4);
+
+
+        cmpObj.add(subCmp);
+
 
     }
 
@@ -109,9 +117,17 @@ public class SearchCompanies extends ActionBarActivity {
         imgNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(SearchCompanies.this,NewCompany.class);
+                Intent i1 = new Intent(SearchCompanies.this, NewCompany.class);
                 startActivity(i1);
 
+            }
+        });
+
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adp.filter(edSearchBox.getText().toString().trim());
             }
         });
 
@@ -130,17 +146,24 @@ public class SearchCompanies extends ActionBarActivity {
     class CustomAdapter extends BaseAdapter {
         LayoutInflater layoutInflator;
         private Context ctx;
-        ArrayList<String> values;
 
-        public CustomAdapter(Context ctx,ArrayList<String> cmp){
+
+        List<SubCompanies> ValuesSearch;
+        ArrayList<SubCompanies> arraylist;
+
+        public CustomAdapter(Context ctx,ArrayList<SubCompanies> cmp){
             this.ctx = ctx;
-            this.values = cmp;
+
+            this.ValuesSearch = cmp;
+
+            arraylist = new ArrayList<SubCompanies>();
+            arraylist.addAll(ValuesSearch);
         }
 
 
         @Override
         public int getCount() {
-            return values.size();
+            return ValuesSearch.size();
         }
 
 
@@ -166,10 +189,31 @@ public class SearchCompanies extends ActionBarActivity {
 
 
             TextView txtName = (TextView)view.findViewById(R.id.txtName);
-            txtName.setText(values.get(position));
+            txtName.setText(ValuesSearch.get(position).cmpName);
 
             return view;
         }
+
+        // Filter Class
+        public void filter(String charText) {
+
+            charText = charText.toLowerCase(Locale.getDefault());
+
+            ValuesSearch.clear();
+            if (charText.length() == 0) {
+                ValuesSearch.addAll(arraylist);
+
+            } else {
+                for ( SubCompanies obj: arraylist) {
+                    if (charText.length() != 0 && obj.cmpName.toLowerCase(Locale.getDefault()).contains(charText)) {
+                        ValuesSearch.add(obj);
+                    }
+
+                }
+            }
+            notifyDataSetChanged();
+        }
+
 
 
     }
