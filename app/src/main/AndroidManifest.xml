@@ -20,78 +20,93 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchCompanies"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".NewCompany"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchAgents"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".NewAgents"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchClients"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".NewClients"
             android:screenOrientation="portrait"/>
 
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchAppointments"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".NewAppointments"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchPolicies"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".NewPolicies"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchClaims"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".NewClaims"
             android:screenOrientation="portrait"/>
 
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Statisitcs"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Backup"
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Products"
             android:screenOrientation="portrait"/>

@@ -24,6 +24,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
             "create table COMPANIES (cmp_id integer primary key autoincrement,cmp_name text,cmp_address text,cmp_weburl text,cmp_notes text);";
 
 
+    private static final String DATABASE_AGENTS =
+            "create table AGENTS (agent_id integer primary key autoincrement,agent_name text,agent_phone text,agent_address text,agent_notes text);";
 
 
 
@@ -50,6 +52,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         {
             try {
                 db.execSQL(DATABASE_COMPANIES);
+                db.execSQL(DATABASE_AGENTS);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -63,6 +66,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                     + newVersion + ", which will destroy all old data");
 
             db.execSQL("DROP TABLE IF EXISTS COMPANIES");
+            db.execSQL("DROP TABLE IF EXISTS AGENTS");
 
 
             onCreate(db);
@@ -98,6 +102,37 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
     }
 
 
+    public boolean updateAgents(long agent_id,String name,String phone,String add,String notes)
+    {
+        Log.e("agent_id",""+agent_id);
+        Log.e("name",name);
+        Log.e("phone",phone);
+        Log.e("add",add);
+        Log.e("notes",notes);
+
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("agent_name", name);//1
+        initialValues.put("agent_phone", phone);//2
+        initialValues.put("agent_address", add);//3
+        initialValues.put("agent_notes", notes);//4
+        return db.update("AGENTS", initialValues, "agent_id = " + agent_id, null) > 0;
+    }
+
+    public long insertAgents(String name,String phone,String add,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("agent_name", name);//1
+        initialValues.put("agent_phone", phone);//2
+        initialValues.put("agent_address", add);//3
+        initialValues.put("agent_notes", notes);//3
+
+        Log.e("insert in AGENTS ", "ok");
+
+        return db.insert("AGENTS", null, initialValues);
+    }
+
     public long insertCompanies(String name,String add,String url,String notes)
     {
         ContentValues initialValues = new ContentValues();
@@ -119,7 +154,12 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         Cursor cursor = db.rawQuery(selectQuery, null);
         return cursor;
     }
-
+    public Cursor getALLAgentsList() throws SQLException
+    {
+        String selectQuery = "SELECT * FROM AGENTS";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
 
 

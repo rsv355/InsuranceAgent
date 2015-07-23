@@ -3,8 +3,11 @@ package com.app.insuranceagent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,7 @@ import java.util.Locale;
 
 public class SearchCompanies extends ActionBarActivity {
     TextView txtTitle;
-    ImageView imgBack,imgNew;
+    ImageView imgBack, imgNew;
     ListView listView;
     DBAdapter db;
 
@@ -51,36 +54,38 @@ public class SearchCompanies extends ActionBarActivity {
         processFetchCompanies();
     }
 
-    void processFetchCompanies(){
+    void processFetchCompanies() {
 
         cmpObj = new ArrayList<>();
 
-        db.open();
-        Cursor c = db.getALLCompaniesList();
-        if (c.moveToFirst())
-        {
-            do {
-                FetchData(c);
-            } while (c.moveToNext());
+        try {
+            db.open();
+            Cursor c = db.getALLCompaniesList();
+            if (c.moveToFirst()) {
+                do {
+                    FetchData(c);
+                } while (c.moveToNext());
+            }
+            db.close();
+
+            adp = new CustomAdapter(SearchCompanies.this, cmpObj);
+
+            listView.setAdapter(adp);
+        } catch (Exception e) {
+            Log.e("### Exc", e.toString());
         }
-        db.close();
-
-        adp = new  CustomAdapter(SearchCompanies.this, cmpObj);
-
-        listView.setAdapter(adp);
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent i1 = new Intent(SearchCompanies.this,NewCompany.class);
+                Intent i1 = new Intent(SearchCompanies.this, NewCompany.class);
 
                 i1.putExtra("cmpID", cmpObj.get(i).cmpID);
                 i1.putExtra("cmpName", cmpObj.get(i).cmpName);
-                i1.putExtra("cmpAddress",cmpObj.get(i).cmpAddress);
-                i1.putExtra("cmpUrl",cmpObj.get(i).cmpWebURL);
-                i1.putExtra("cmpNotes",cmpObj.get(i).cmpNotes);
+                i1.putExtra("cmpAddress", cmpObj.get(i).cmpAddress);
+                i1.putExtra("cmpUrl", cmpObj.get(i).cmpWebURL);
+                i1.putExtra("cmpNotes", cmpObj.get(i).cmpNotes);
                 startActivity(i1);
             }
         });
@@ -88,8 +93,7 @@ public class SearchCompanies extends ActionBarActivity {
 
     }
 
-    private void FetchData(Cursor c)
-    {
+    private void FetchData(Cursor c) {
         SubCompanies subCmp = new SubCompanies();
         subCmp.cmpID = c.getInt(0);
         subCmp.cmpName = c.getString(1);
@@ -104,14 +108,14 @@ public class SearchCompanies extends ActionBarActivity {
     }
 
 
-    private void init(){
-        edSearchBox = (EditText)findViewById(R.id.edSearchBox);
-        imgSearch = (ImageView)findViewById(R.id.imgSearch);
+    private void init() {
+        edSearchBox = (EditText) findViewById(R.id.edSearchBox);
+        imgSearch = (ImageView) findViewById(R.id.imgSearch);
 
-        imgNew = (ImageView)findViewById(R.id.imgNew);
-        listView= (ListView)findViewById(R.id.listView);
-        txtTitle = (TextView)findViewById(R.id.txtTitle);
-        imgBack = (ImageView)findViewById(R.id.imgBack);
+        imgNew = (ImageView) findViewById(R.id.imgNew);
+        listView = (ListView) findViewById(R.id.listView);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         txtTitle.setText(getIntent().getStringExtra("title"));
 
         imgNew.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +146,6 @@ public class SearchCompanies extends ActionBarActivity {
     }
 
 
-
     class CustomAdapter extends BaseAdapter {
         LayoutInflater layoutInflator;
         private Context ctx;
@@ -151,7 +154,7 @@ public class SearchCompanies extends ActionBarActivity {
         List<SubCompanies> ValuesSearch;
         ArrayList<SubCompanies> arraylist;
 
-        public CustomAdapter(Context ctx,ArrayList<SubCompanies> cmp){
+        public CustomAdapter(Context ctx, ArrayList<SubCompanies> cmp) {
             this.ctx = ctx;
 
             this.ValuesSearch = cmp;
@@ -187,8 +190,15 @@ public class SearchCompanies extends ActionBarActivity {
 
             view = layoutInflator.inflate(R.layout.row_item_comapnies, parent, false);
 
+            ImageView img = (ImageView) view.findViewById(R.id.img);
+            TextView txtName = (TextView) view.findViewById(R.id.txtName);
 
-            TextView txtName = (TextView)view.findViewById(R.id.txtName);
+            img.setImageResource(R.drawable.business);
+
+            int col = Color.parseColor("#2196F3");
+            img.setColorFilter(col, PorterDuff.Mode.SRC_ATOP);
+
+
             txtName.setText(ValuesSearch.get(position).cmpName);
 
             return view;
@@ -204,7 +214,7 @@ public class SearchCompanies extends ActionBarActivity {
                 ValuesSearch.addAll(arraylist);
 
             } else {
-                for ( SubCompanies obj: arraylist) {
+                for (SubCompanies obj : arraylist) {
                     if (charText.length() != 0 && obj.cmpName.toLowerCase(Locale.getDefault()).contains(charText)) {
                         ValuesSearch.add(obj);
                     }
@@ -215,15 +225,7 @@ public class SearchCompanies extends ActionBarActivity {
         }
 
 
-
     }
-
-
-
-
-
-
-
 
 
     //end of main class

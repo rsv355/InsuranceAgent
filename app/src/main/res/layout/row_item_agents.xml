@@ -4,9 +4,13 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/img"
         android:layout_marginLeft="16dp"
@@ -26,6 +30,15 @@
     android:id="@+id/txtName"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
-
-
+    </LinearLayout>
+    <TextView
+        android:text="Phone"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center"
+        android:gravity="right"
+        android:textSize="10sp"
+        android:textColor="#484A4C"
+        android:id="@+id/txtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
