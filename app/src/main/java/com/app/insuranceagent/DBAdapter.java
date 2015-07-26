@@ -28,6 +28,22 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
             "create table AGENTS (agent_id integer primary key autoincrement,agent_name text,agent_phone text,agent_address text,agent_notes text);";
 
 
+    private static final String DATABASE_CLIENTS =
+            "create table CLIENTS (client_id integer primary key autoincrement," +
+                    "id text," +  //1
+                    "client_name text," + //2
+                    "client_type text," +//3
+                    "client_birth text," +//4
+                    "client_gender text," +//5
+                    "client_marital_stat text," +//6
+                    "client_email text," +//7
+                    "client_address text," +//8
+                    "client_cell_phone text," +//9
+                    "client_home_phone text," +//10
+                    "client_work_phone text," +//11
+                    "client_eme_cont text," +//12
+                    "client_eme_phone text," +//13
+                    "client_notes text);";//14
 
 
     private final Context context;
@@ -53,6 +69,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
             try {
                 db.execSQL(DATABASE_COMPANIES);
                 db.execSQL(DATABASE_AGENTS);
+                db.execSQL(DATABASE_CLIENTS);
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -67,6 +85,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
 
             db.execSQL("DROP TABLE IF EXISTS COMPANIES");
             db.execSQL("DROP TABLE IF EXISTS AGENTS");
+            db.execSQL("DROP TABLE IF EXISTS CLIENTS");
 
 
             onCreate(db);
@@ -117,6 +136,63 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         initialValues.put("agent_address", add);//3
         initialValues.put("agent_notes", notes);//4
         return db.update("AGENTS", initialValues, "agent_id = " + agent_id, null) > 0;
+    }
+
+    public boolean updateClients(long client_id,String id,String client_name,String client_type,String client_birth,
+                              String client_gender,String client_marital_stat,String client_email,String client_address,
+                              String client_cell_phone,String client_home_phone,String client_work_phone,String client_eme_cont,String client_eme_phone,String client_notes)
+    {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put("id", id);//1
+        initialValues.put("client_name", client_name);//2
+        initialValues.put("client_type", client_type);//3
+        initialValues.put("client_birth", client_birth);//3
+
+        initialValues.put("client_gender", client_gender);//1
+        initialValues.put("client_marital_stat", client_marital_stat);//2
+        initialValues.put("client_email", client_email);//3
+        initialValues.put("client_address", client_address);//3
+
+        initialValues.put("client_cell_phone", client_cell_phone);//1
+        initialValues.put("client_home_phone", client_home_phone);//2
+        initialValues.put("client_work_phone", client_work_phone);//3
+        initialValues.put("client_eme_cont", client_eme_cont);//3
+        initialValues.put("client_eme_phone", client_eme_phone);//3
+        initialValues.put("client_notes", client_notes);//3
+
+
+        Log.e("insert in CLIENTS ", "ok");
+
+        return db.update("CLIENTS", initialValues, "client_id = " + client_id, null) > 0;
+    }
+
+
+    public long insertClients(String id,String client_name,String client_type,String client_birth,
+                              String client_gender,String client_marital_stat,String client_email,String client_address,
+                              String client_cell_phone,String client_home_phone,String client_work_phone,String client_eme_cont,String client_eme_phone,String client_notes)
+    {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put("id", id);//1
+        initialValues.put("client_name", client_name);//2
+        initialValues.put("client_type", client_type);//3
+        initialValues.put("client_birth", client_birth);//3
+
+        initialValues.put("client_gender", client_gender);//1
+        initialValues.put("client_marital_stat", client_marital_stat);//2
+        initialValues.put("client_email", client_email);//3
+        initialValues.put("client_address", client_address);//3
+
+        initialValues.put("client_cell_phone", client_cell_phone);//1
+        initialValues.put("client_home_phone", client_home_phone);//2
+        initialValues.put("client_work_phone", client_work_phone);//3
+        initialValues.put("client_eme_cont", client_eme_cont);//3
+        initialValues.put("client_eme_phone", client_eme_phone);//3
+        initialValues.put("client_notes", client_notes);//3
+
+
+        Log.e("insert in CLIENTS ", "ok");
+
+        return db.insert("CLIENTS", null, initialValues);
     }
 
     public long insertAgents(String name,String phone,String add,String notes)
