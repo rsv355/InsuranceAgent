@@ -23,6 +23,7 @@ public class NewAgents extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addagents);
+
         db = new DBAdapter(NewAgents.this);
 
         init();
@@ -75,7 +76,7 @@ public class NewAgents extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if (edName.getText().toString().trim().length() == 0) {
-                    Toast.makeText(NewAgents.this, "Please enter agent !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAgents.this, "Please enter agent details !!!", Toast.LENGTH_SHORT).show();
                 } else {
 
                     if (tempName == null || tempName.toString().trim().length() == 0) {
