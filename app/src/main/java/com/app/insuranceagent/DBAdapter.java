@@ -46,6 +46,15 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                     "client_notes text);";//14
 
 
+    private static final String DATABASE_APPOINTMENTS =
+            "create table APPOINTMENTS (app_id integer primary key autoincrement," +
+                    "client_name text," +
+                    "agent_name text," +
+                    "date text," +
+                    "time text," +
+                    "app_notes text);";//14
+
+
     private final Context context;
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
@@ -70,6 +79,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                 db.execSQL(DATABASE_COMPANIES);
                 db.execSQL(DATABASE_AGENTS);
                 db.execSQL(DATABASE_CLIENTS);
+                db.execSQL(DATABASE_APPOINTMENTS);
 
 
             } catch (SQLException e) {
@@ -86,7 +96,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
             db.execSQL("DROP TABLE IF EXISTS COMPANIES");
             db.execSQL("DROP TABLE IF EXISTS AGENTS");
             db.execSQL("DROP TABLE IF EXISTS CLIENTS");
-
+            db.execSQL("DROP TABLE IF EXISTS APPOINTMENTS");
 
             onCreate(db);
         }
@@ -224,6 +234,41 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
     }
 
 
+    public long insertAppointments(String cname,String aname,String date,String time,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("client_name", cname);//1
+        initialValues.put("agent_name", aname);//2
+        initialValues.put("date", date);//3
+        initialValues.put("time", time);//3
+        initialValues.put("app_notes", notes);//3
+
+        Log.e("insert in APPOINTMENTS ", "ok");
+
+        return db.insert("APPOINTMENTS", null, initialValues);
+    }
+
+    public boolean updateAppointments(long app_id,String cname,String aname,String date,String time,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("client_name", cname);//1
+        initialValues.put("agent_name", aname);//2
+        initialValues.put("date", date);//3
+        initialValues.put("time", time);//3
+        initialValues.put("app_notes", notes);//3
+        return db.update("APPOINTMENTS", initialValues, "app_id = " + app_id, null) > 0;
+    }
+
+
+
+    public Cursor getALLAppointmentsList() throws SQLException
+    {
+        String selectQuery = "SELECT * FROM APPOINTMENTS";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
     public Cursor getALLCompaniesList() throws SQLException
     {
         String selectQuery = "SELECT * FROM companies";
