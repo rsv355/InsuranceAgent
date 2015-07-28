@@ -52,7 +52,17 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                     "agent_name text," +
                     "date text," +
                     "time text," +
-                    "app_notes text);";//14
+                    "app_notes text);";
+
+    private static final String DATABASE_CLAIMS =
+            "create table CLAIMS (clm_id integer primary key autoincrement," +
+                    "policy_name text," +
+                    "date text," +
+                    "amount text," +
+                    "amount_paid text," +
+                    "status text," +
+                    "fullfillment_date text," +
+                    "clm_notes text);";
 
 
     private final Context context;
@@ -80,6 +90,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                 db.execSQL(DATABASE_AGENTS);
                 db.execSQL(DATABASE_CLIENTS);
                 db.execSQL(DATABASE_APPOINTMENTS);
+                db.execSQL(DATABASE_CLAIMS);
+
 
 
             } catch (SQLException e) {
@@ -97,6 +109,8 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
             db.execSQL("DROP TABLE IF EXISTS AGENTS");
             db.execSQL("DROP TABLE IF EXISTS CLIENTS");
             db.execSQL("DROP TABLE IF EXISTS APPOINTMENTS");
+            db.execSQL("DROP TABLE IF EXISTS CLAIMS");
+
 
             onCreate(db);
         }
@@ -233,6 +247,49 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         return db.insert("COMPANIES", null, initialValues);
     }
 
+
+
+
+    public long insertClaims(String pname,String date,String amt,String ampuntPaid,String time,String fullDate,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("policy_name", pname);//1
+        initialValues.put("date", date);//2
+        initialValues.put("amount", amt);//3
+        initialValues.put("amount_paid", ampuntPaid);//3
+        initialValues.put("status", time);//3
+        initialValues.put("fullfillment_date", fullDate);//3
+        initialValues.put("clm_notes", notes);//3
+
+        Log.e("insert in CLAIMS ", "ok");
+
+        return db.insert("CLAIMS", null, initialValues);
+    }
+
+    public boolean updateClaims(long clm_id,String pname,String date,String amt,String ampuntPaid,String time,String fullDate,String notes)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("policy_name", pname);//1
+        initialValues.put("date", date);//2
+        initialValues.put("amount", amt);//3
+        initialValues.put("amount_paid", ampuntPaid);//3
+        initialValues.put("status", time);//3
+        initialValues.put("fullfillment_date", fullDate);//3
+        initialValues.put("clm_notes", notes);//3
+
+        return db.update("CLAIMS", initialValues, "clm_id = " + clm_id, null) > 0;
+    }
+
+
+
+    public Cursor getALLClaimsList() throws SQLException
+    {
+        String selectQuery = "SELECT * FROM CLAIMS";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
     public long insertAppointments(String cname,String aname,String date,String time,String notes)
     {
