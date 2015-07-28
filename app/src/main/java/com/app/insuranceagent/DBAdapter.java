@@ -64,6 +64,32 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                     "fullfillment_date text," +
                     "clm_notes text);";
 
+    private static final String DATABASE_POLICY =
+            "create table POLICY (pol_id integer primary key autoincrement," +
+                    "client_name text," +
+                    "agent_name text," +
+                    "cmp_name text," +
+                    "pol_no text," +
+                    "pol_type text," +
+                    "prod_detail text," +
+
+                    "eff_date text," +
+                    "exp_date text," +
+                    "term text," +
+                    "summary text," +
+                    "premium text," +
+                    "downpayment text," +
+                    "sales_com text," +
+
+                    "deductible text," +
+                    "payment_method text," +
+                    "payment_freq text," +
+                    "status text," +
+                    "charge text," +
+                    "credit text," +
+
+                    "balance text);";
+
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -91,6 +117,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
                 db.execSQL(DATABASE_CLIENTS);
                 db.execSQL(DATABASE_APPOINTMENTS);
                 db.execSQL(DATABASE_CLAIMS);
+                db.execSQL(DATABASE_POLICY);
 
 
 
@@ -110,7 +137,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
             db.execSQL("DROP TABLE IF EXISTS CLIENTS");
             db.execSQL("DROP TABLE IF EXISTS APPOINTMENTS");
             db.execSQL("DROP TABLE IF EXISTS CLAIMS");
-
+            db.execSQL("DROP TABLE IF EXISTS POLICY");
 
             onCreate(db);
         }
@@ -247,8 +274,108 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         return db.insert("COMPANIES", null, initialValues);
     }
 
+    /*"client_name text," +
+            "agent_name text," +
+            "cmp_name text," +
+
+            "pol_no text," +
+            "pol_type text," +
+            "prod_detail text," +
+
+            "eff_date text," +
+
+            "exp_date text," +
+            "term text," +
+            "summary text," +
+            "premium text," +
+            "downpayment text," +
+            "sales_com text," +
+
+            "deductible text," +
+            "payment_method text," +
+            "payment_freq text," +
+            "status text," +
+            "charge text," +
+            "credit text," +
+
+            "balance text);";*/
+
+    public long insertPolicy(String client_name,String agent_name,String cmp_name,String pol_no,String pol_type,
+                             String prod_detail,String eff_date,String exp_date,String term,String summary,String premium,
+                             String downpayment,String sales_com,String deductible,
+                             String payment_method,String payment_freq,String status,String charge,String credit,String balance)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("client_name", client_name);//1
+        initialValues.put("agent_name", agent_name);//2
+        initialValues.put("cmp_name", cmp_name);//3
+        initialValues.put("pol_no", pol_no);//3
+        initialValues.put("pol_type", pol_type);//3
+        initialValues.put("prod_detail", prod_detail);//3
+        initialValues.put("eff_date", eff_date);//3
+
+        initialValues.put("exp_date", exp_date);//1
+        initialValues.put("term", term);//2
+        initialValues.put("summary", summary);//3
+        initialValues.put("premium", premium);//3
+        initialValues.put("downpayment", downpayment);//3
+        initialValues.put("sales_com", sales_com);//3
+        initialValues.put("deductible", deductible);//3
+
+        initialValues.put("payment_method", payment_method);//3
+        initialValues.put("payment_freq", payment_freq);//3
+        initialValues.put("status", status);//3
+        initialValues.put("charge", charge);//3
+        initialValues.put("credit", credit);//3
+        initialValues.put("balance", balance);//3
+
+        Log.e("insert in POLICY ", "ok");
+
+        return db.insert("POLICY", null, initialValues);
+    }
+
+    public boolean updatePolicy(long pol_id,String client_name,String agent_name,String cmp_name,String pol_no,String pol_type,
+                                String prod_detail,String eff_date,String exp_date,String term,String summary,String premium,
+                                String downpayment,String sales_com,String deductible,
+                                String payment_method,String payment_freq,String status,String charge,String credit,String balance)
+    {
+        ContentValues initialValues = new ContentValues();
+
+        initialValues.put("client_name", client_name);//1
+        initialValues.put("agent_name", agent_name);//2
+        initialValues.put("cmp_name", cmp_name);//3
+        initialValues.put("pol_no", pol_no);//3
+        initialValues.put("pol_type", pol_type);//3
+        initialValues.put("prod_detail", prod_detail);//3
+        initialValues.put("eff_date", eff_date);//3
+
+        initialValues.put("exp_date", exp_date);//1
+        initialValues.put("term", term);//2
+        initialValues.put("summary", summary);//3
+        initialValues.put("premium", premium);//3
+        initialValues.put("downpayment", downpayment);//3
+        initialValues.put("sales_com", sales_com);//3
+        initialValues.put("deductible", deductible);//3
+
+        initialValues.put("payment_method", payment_method);//3
+        initialValues.put("payment_freq", payment_freq);//3
+        initialValues.put("status", status);//3
+        initialValues.put("charge", charge);//3
+        initialValues.put("credit", credit);//3
+        initialValues.put("balance", balance);//3
+
+        return db.update("POLICY", initialValues, "pol_id = " + pol_id, null) > 0;
+    }
 
 
+
+    public Cursor getALLPolicyList() throws SQLException
+    {
+        String selectQuery = "SELECT * FROM POLICY";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
     public long insertClaims(String pname,String date,String amt,String ampuntPaid,String time,String fullDate,String notes)
     {
