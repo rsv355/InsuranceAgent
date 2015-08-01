@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,17 +26,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
+
 
 public class SearchAppointments extends ActionBarActivity {
     TextView txtTitle;
     ImageView imgBack, imgNew;
     ListView listView;
     DBAdapter db;
-
+    MaterialSpinner spCType,spAgent;
     EditText edSearchBox;
     ImageView imgSearch;
     CustomAdapter adp;
     ArrayList<SubAppointments> appObj;
+
+    ArrayList<String> clientData;
+    ArrayList<String> agentData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +112,10 @@ public class SearchAppointments extends ActionBarActivity {
     }
 
     private void init() {
+
+        spCType = (MaterialSpinner) findViewById(R.id.spCType);
+        spAgent = (MaterialSpinner) findViewById(R.id.spAgent);
+
         edSearchBox = (EditText) findViewById(R.id.edSearchBox);
         imgSearch = (ImageView) findViewById(R.id.imgSearch);
 
@@ -112,12 +123,12 @@ public class SearchAppointments extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.listView);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         imgBack = (ImageView) findViewById(R.id.imgBack);
-        txtTitle.setText(getIntent().getStringExtra("title"));
+       // txtTitle.setText(getIntent().getStringExtra("title"));
 
         imgNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(SearchAppointments.this, NewAgents.class);
+                Intent i1 = new Intent(SearchAppointments.this, NewAppointments.class);
                 startActivity(i1);
 
             }
@@ -139,8 +150,63 @@ public class SearchAppointments extends ActionBarActivity {
             }
         });
 
+        fetchClientSpinnerData();
+        fetchAgentSpinnerData();
     }
 
+    void fetchAgentSpinnerData(){
+
+        agentData =  new ArrayList<>();
+        try {
+
+            db.open();
+            Cursor c = db.getAllAgentName();
+            if (c.moveToFirst()) {
+                do {
+                    FetchDataAgent(c);
+                } while (c.moveToNext());
+            }
+            db.close();
+
+            ArrayAdapter<String> clientAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, android.R.id.text1, agentData);
+            spAgent.setAdapter(clientAdapter);
+
+        } catch (Exception e) {
+            Log.e("### Exc", e.toString());
+        }
+    }
+
+    private void FetchDataAgent(Cursor c) {
+        agentData.add(c.getString(0));
+    }
+
+    void fetchClientSpinnerData(){
+
+        clientData =  new ArrayList<>();
+        try {
+
+            db.open();
+            Cursor c = db.getAllClientName();
+            if (c.moveToFirst()) {
+                do {
+                    FetchclientData(c);
+                } while (c.moveToNext());
+            }
+            db.close();
+
+            ArrayAdapter<String> clientAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, android.R.id.text1, clientData);
+            spCType.setAdapter(clientAdapter);
+
+        } catch (Exception e) {
+            Log.e("### Exc", e.toString());
+        }
+    }
+
+    private void FetchclientData(Cursor c) {
+        clientData.add(c.getString(0));
+    }
 
     class CustomAdapter extends BaseAdapter {
         LayoutInflater layoutInflator;

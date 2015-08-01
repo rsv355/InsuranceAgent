@@ -473,7 +473,21 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
     }
 
 
+    public Cursor getAllAgentName() throws SQLException
+    {
+        String selectQuery = "SELECT agent_name FROM AGENTS";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
+
+
+    public Cursor getAllClientName() throws SQLException
+    {
+        String selectQuery = "SELECT client_name FROM CLIENTS";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
 
 
