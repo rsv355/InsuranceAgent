@@ -489,6 +489,13 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         return cursor;
     }
 
+    public Cursor getAllCompaniesName() throws SQLException
+    {
+        String selectQuery = "SELECT cmp_name FROM companies";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
+
 
 
     //---deletes a particular contact---

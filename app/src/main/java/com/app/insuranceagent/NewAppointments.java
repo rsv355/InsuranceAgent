@@ -29,7 +29,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 
 public class NewAppointments extends ActionBarActivity {
-    TextView txtTitle;
+    TextView txtTitle,txtSubTitle;
     ImageView imgClose,imgBack,imgSave;
     ListView listView;
     DBAdapter db;
@@ -75,6 +75,7 @@ public class NewAppointments extends ActionBarActivity {
         if (tempId == -1) {
 
         } else {
+            txtSubTitle.setText("Edit");
             spCType.setSelection(getSimpleIndex(spCType,tempclientName));
             spAgent.setSelection(getSimpleIndex(spAgent,tempagentName));
             edDate.setText(tempdate);
@@ -105,7 +106,7 @@ public class NewAppointments extends ActionBarActivity {
 
         spCType = (MaterialSpinner) findViewById(R.id.spCType);
         spAgent = (MaterialSpinner) findViewById(R.id.spAgent);
-
+        txtSubTitle  = (TextView)findViewById(R.id.txtSubTitle);
         edDate = (MaterialEditText) findViewById(R.id.edDate);
         edTime = (MaterialEditText) findViewById(R.id.edTime);
         edNotes = (MaterialEditText) findViewById(R.id.edNotes);
@@ -133,11 +134,11 @@ public class NewAppointments extends ActionBarActivity {
                     Toast.makeText(NewAppointments.this, "Please select client !!!", Toast.LENGTH_SHORT).show();
                 } else {
 
-                  //  if (spCType.getSelectedItemPosition()==0) {
+                    if (tempId == -1) {
                         processSave();
-                   // } else {
-                   //     processUpdate();
-                   // }
+                    } else {
+                        processUpdate();
+                    }
 
                 }
             }

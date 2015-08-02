@@ -23,7 +23,6 @@ public class NewAgents extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addagents);
-
         db = new DBAdapter(NewAgents.this);
 
         init();
