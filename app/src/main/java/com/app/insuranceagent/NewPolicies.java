@@ -31,6 +31,8 @@ public class NewPolicies extends ActionBarActivity {
     int temppolID;
     ArrayList<String> policyType;
     ArrayList<String> paymentMethod;
+    ArrayList<String> paymentFreq;
+    ArrayList<String> status;
     DBAdapter db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,18 @@ public class NewPolicies extends ActionBarActivity {
         paymentMethod.add("Direct Debit/Standing Order");
         paymentMethod.add("In-House Payroll");
         paymentMethod.add("Other");
+
+        paymentFreq = new ArrayList<>();
+        paymentFreq.add("01-Unique/Yearly");
+        paymentFreq.add("12-Monthly");
+        paymentFreq.add("06-Three-Monthly/Quarterly");
+        paymentFreq.add("02-Semi-Annually/Bi-Annually");
+        paymentFreq.add("24-Semi-Monthly");
+
+        status = new ArrayList<>();
+        status.add("Active");
+        status.add("Inactive");
+        status.add("Canceled");
 
         ArrayAdapter<String> clientAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, policyType);
