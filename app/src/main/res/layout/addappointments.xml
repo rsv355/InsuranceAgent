@@ -134,6 +134,7 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:drawableRight="@drawable/ic_cal"
                 android:drawablePadding="5dp"
+                android:focusable="false"
                 app:met_textColorHint="#909599"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -151,6 +152,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:drawableRight="@drawable/ic_timer"
                     android:drawablePadding="5dp"
+                    android:focusable="false"
                     app:met_textColorHint="#909599"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"

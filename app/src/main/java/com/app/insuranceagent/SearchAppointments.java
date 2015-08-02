@@ -82,7 +82,7 @@ public class SearchAppointments extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent i1 = new Intent(SearchAppointments.this, NewAgents.class);
+                Intent i1 = new Intent(SearchAppointments.this, NewAppointments.class);
 
                 i1.putExtra("appID", appObj.get(i).appID);
                 i1.putExtra("clientName", appObj.get(i).clientName);
@@ -113,7 +113,7 @@ public class SearchAppointments extends ActionBarActivity {
 
     private void init() {
 
-        spCType = (MaterialSpinner) findViewById(R.id.spCType);
+        spCType = (MaterialSpinner) findViewById(R.id.spClient);
         spAgent = (MaterialSpinner) findViewById(R.id.spAgent);
 
         edSearchBox = (EditText) findViewById(R.id.edSearchBox);
@@ -173,7 +173,7 @@ public class SearchAppointments extends ActionBarActivity {
             spAgent.setAdapter(clientAdapter);
 
         } catch (Exception e) {
-            Log.e("### Exc", e.toString());
+            Log.e("### Exc1", e.toString());
         }
     }
 
@@ -200,7 +200,7 @@ public class SearchAppointments extends ActionBarActivity {
             spCType.setAdapter(clientAdapter);
 
         } catch (Exception e) {
-            Log.e("### Exc", e.toString());
+            Log.e("### Exc2", e.toString());
         }
     }
 
