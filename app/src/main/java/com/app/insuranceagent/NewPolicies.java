@@ -399,15 +399,42 @@ public class NewPolicies extends ActionBarActivity {
             // Show selected date
             edDate.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year));
 
-            StringBuilder sDate = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day);
+            StringBuilder sDate;
+            StringBuilder eDate;
 
-            LocalDate startDate = new LocalDate ();          //Birth date
-            LocalDate endDate = new LocalDate(sDate.toString().trim());                    //Today's date
+            sDate = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day);
+
+
+            if(expDate.getText().toString().trim().length()==0){
+                expDate.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year));
+                eDate = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day);
+            }else{
+                String tempDate = expDate.getText().toString();
+
+                int tempdays = Integer.valueOf(tempDate.substring(0, expDate.getText().toString().indexOf("-")));
+                int tempmonth = Integer.valueOf(tempDate.substring(expDate.getText().toString().indexOf("-")+1, expDate.getText().toString().lastIndexOf("-")));
+                int tempyear = Integer.valueOf(tempDate.substring(expDate.getText().toString().lastIndexOf("-")+1,expDate.length()));
+
+                Log.e("### days",""+tempdays);
+                Log.e("### tempmonth",""+tempmonth);
+                Log.e("### tempyear",""+tempyear);
+                eDate = new StringBuilder().append(tempyear).append("-").append(tempmonth).append("-").append(tempdays);
+            }
+
+
+
+            LocalDate startDate = new LocalDate (sDate.toString().trim());
+            LocalDate endDate = new LocalDate(eDate.toString().trim());
+
             Period period = new Period(startDate, endDate, PeriodType.months());
+            Log.e("############## dif", "" + period.getMonths());
 
-            Log.e("############## endDate",""+endDate.toString());
+            if(period.getMonths()<=0){
+                edTerm.setText("0");
+            }else{
+                edTerm.setText(""+ period.getMonths());
+            }
 
-            Log.e("############## dif",""+period.getMonths());
         }
     };
 
@@ -425,13 +452,40 @@ public class NewPolicies extends ActionBarActivity {
             // Show selected date
             expDate.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year));
 
-            LocalDate startDate = new LocalDate (edDate.getText().toString());          //Birth date
-            LocalDate endDate = new LocalDate(expDate.getText().toString());                    //Today's date
+            StringBuilder sDate;
+            StringBuilder eDate;
+
+            eDate = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day);
+
+
+            if(edDate.getText().toString().trim().length()==0){
+                edDate.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year));
+                sDate = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day);
+            }else{
+                String tempDate = edDate.getText().toString();
+
+                int tempdays = Integer.valueOf(tempDate.substring(0, edDate.getText().toString().indexOf("-")));
+                int tempmonth = Integer.valueOf(tempDate.substring(edDate.getText().toString().indexOf("-")+1, edDate.getText().toString().lastIndexOf("-")));
+                int tempyear = Integer.valueOf(tempDate.substring(edDate.getText().toString().lastIndexOf("-")+1,edDate.length()));
+
+                sDate = new StringBuilder().append(tempyear).append("-").append(tempmonth).append("-").append(tempdays);
+            }
+
+
+
+            LocalDate startDate = new LocalDate (sDate.toString().trim());
+            LocalDate endDate = new LocalDate(eDate.toString().trim());
+
             Period period = new Period(startDate, endDate, PeriodType.months());
+            Log.e("############## dif", "" + period.getMonths());
+
+            if(period.getMonths()<=0){
+                edTerm.setText("0");
+            }else{
+                edTerm.setText(""+ period.getMonths());
+            }
 
 
-
-            Log.e("############## dif",""+period);
         }
     };
     //end of main class
