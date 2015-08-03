@@ -1,17 +1,32 @@
 package com.app.insuranceagent;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -20,7 +35,7 @@ public class NewPolicies extends ActionBarActivity {
     TextView txtTitle, txtSubHeading;
     ImageView imgClose, imgBack, imgSave;
     ListView listView;
-    MaterialEditText edPolicyNumber, edProductD, edDate, edTime,edTerm,edInsSumm,edPrem,edDownP,edSales,edDeduct,edCharge,edCredit,edBal;
+    MaterialEditText edPolicyNumber, edProductD, edDate, expDate,edTerm,edInsSumm,edPrem,edDownP,edSales,edDeduct,edCharge,edCredit,edBal;
 
     MaterialSpinner spCType,spAgent,spCmp,spPType,spPayM,spPayFrq,spStatus;
 
@@ -33,13 +48,26 @@ public class NewPolicies extends ActionBarActivity {
     ArrayList<String> paymentMethod;
     ArrayList<String> paymentFreq;
     ArrayList<String> status;
+    private int year;
+    private int month;
+    private int day;
+    static final int DATE_PICKER_ID1 = 1111;
+    static final int DATE_PICKER_ID2 = 2222;
+    ArrayList<String> cmpData;
+    ArrayList<String> clientData;
+    ArrayList<String> agentData;
+
+
     DBAdapter db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addpolicy);
         db = new DBAdapter(NewPolicies.this);
-
+        final Calendar c = Calendar.getInstance();
+        year  = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day   = c.get(Calendar.DAY_OF_MONTH);
         init();
 
         policyType = new ArrayList<>();
@@ -154,12 +182,76 @@ public class NewPolicies extends ActionBarActivity {
             }
         });
 
+        edDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
 
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (edDate.getRight() - edDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        showDialog(DATE_PICKER_ID1);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
+        expDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (expDate.getRight() - expDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        showDialog(DATE_PICKER_ID2);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
     }
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_PICKER_ID1:
 
+                // open datepicker dialog.
+                // set date picker for current date
+                // add pickerListener listner to date picker
+                return new DatePickerDialog(this, pickerListener1, year, month,day);
+            case DATE_PICKER_ID2:
 
+                // open datepicker dialog.
+                // set date picker for current date
+                // add pickerListener listner to date picker
+                return new DatePickerDialog(this, pickerListener2, year, month,day);
+
+        }
+        return null;
+    }
+
+    //private method of your class
+    private int getSimpleIndex(Spinner spinner, String myString)
+    {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 
 
     private void init(){
@@ -168,7 +260,7 @@ public class NewPolicies extends ActionBarActivity {
         edPolicyNumber= (MaterialEditText)findViewById(R.id.edPolicyNumber);
         edProductD= (MaterialEditText)findViewById(R.id.edProductD);
         edDate= (MaterialEditText)findViewById(R.id.edDate);
-        edTime= (MaterialEditText)findViewById(R.id.edTime);
+        expDate= (MaterialEditText)findViewById(R.id.expDate);
         edTerm= (MaterialEditText)findViewById(R.id.edTerm);
         edInsSumm= (MaterialEditText)findViewById(R.id.edInsSumm);
         edPrem= (MaterialEditText)findViewById(R.id.edPrem);
@@ -191,6 +283,10 @@ public class NewPolicies extends ActionBarActivity {
         imgBack = (ImageView)findViewById(R.id.imgBack);
         imgSave = (ImageView)findViewById(R.id.imgSave);
 
+        fetchClientSpinnerData();
+        fetchAgentSpinnerData();
+        fetchCompaniesSpinnerData();
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,6 +302,137 @@ public class NewPolicies extends ActionBarActivity {
 
     }
 
+    void fetchCompaniesSpinnerData(){
 
+        cmpData =  new ArrayList<>();
+        try {
+
+            db.open();
+            Cursor c = db.getAllCompaniesName();
+            if (c.moveToFirst()) {
+                do {
+                    FetchCmp(c);
+                } while (c.moveToNext());
+            }
+            db.close();
+
+            ArrayAdapter<String> clientAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, android.R.id.text1, cmpData);
+            spCmp.setAdapter(clientAdapter);
+
+        } catch (Exception e) {
+            Log.e("### Exc1", e.toString());
+        }
+    }
+
+    private void FetchCmp(Cursor c) {
+        cmpData.add(c.getString(0));
+    }
+    void fetchAgentSpinnerData(){
+
+        agentData =  new ArrayList<>();
+        try {
+
+            db.open();
+            Cursor c = db.getAllAgentName();
+            if (c.moveToFirst()) {
+                do {
+                    FetchDataAgent(c);
+                } while (c.moveToNext());
+            }
+            db.close();
+
+            ArrayAdapter<String> clientAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, android.R.id.text1, agentData);
+            spAgent.setAdapter(clientAdapter);
+
+        } catch (Exception e) {
+            Log.e("### Exc", e.toString());
+        }
+    }
+
+    private void FetchDataAgent(Cursor c) {
+        agentData.add(c.getString(0));
+
+
+    }
+
+    void fetchClientSpinnerData(){
+
+        clientData =  new ArrayList<>();
+        try {
+
+            db.open();
+            Cursor c = db.getAllClientName();
+            if (c.moveToFirst()) {
+                do {
+                    FetchClientData(c);
+                } while (c.moveToNext());
+            }
+            db.close();
+
+            ArrayAdapter<String> clientAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, android.R.id.text1, clientData);
+            spCType.setAdapter(clientAdapter);
+
+        } catch (Exception e) {
+            Log.e("### Exc", e.toString());
+        }
+    }
+
+    private void FetchClientData(Cursor c) {
+        clientData.add(c.getString(0));
+
+
+    }
+    private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            year  = selectedYear;
+            month = selectedMonth;
+            day   = selectedDay;
+
+            // Show selected date
+            edDate.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year));
+
+            StringBuilder sDate = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day);
+
+            LocalDate startDate = new LocalDate ();          //Birth date
+            LocalDate endDate = new LocalDate(sDate.toString().trim());                    //Today's date
+            Period period = new Period(startDate, endDate, PeriodType.months());
+
+            Log.e("############## endDate",""+endDate.toString());
+
+            Log.e("############## dif",""+period.getMonths());
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener pickerListener2 = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            year  = selectedYear;
+            month = selectedMonth;
+            day   = selectedDay;
+
+            // Show selected date
+            expDate.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year));
+
+            LocalDate startDate = new LocalDate (edDate.getText().toString());          //Birth date
+            LocalDate endDate = new LocalDate(expDate.getText().toString());                    //Today's date
+            Period period = new Period(startDate, endDate, PeriodType.months());
+
+
+
+            Log.e("############## dif",""+period);
+        }
+    };
     //end of main class
 }

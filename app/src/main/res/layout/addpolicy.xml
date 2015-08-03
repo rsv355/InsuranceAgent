@@ -263,12 +263,13 @@
                 app:met_singleLineEllipsis="true" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:focusable="false"
                     android:drawableRight="@drawable/ic_cal"
                     android:drawablePadding="5dp"
                     app:met_textColorHint="#909599"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/edTime"
+                    android:id="@+id/expDate"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -281,6 +282,7 @@
             </LinearLayout>
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:focusable="false"
                 app:met_textColorHint="#909599"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
