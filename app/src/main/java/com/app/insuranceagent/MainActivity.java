@@ -6,15 +6,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
     LinearLayout linearProducts,linearStats,linearBackup,linearClaims,linearAppointments,linearClients,linearComp,linearAgents,linearPolicies;
+    AdRequest adRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         init();
+
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        // Request for Ads
+        adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Banner Ads
+        adView.loadAd(adRequest);
+        // adview ends
     }
 
   private void init(){

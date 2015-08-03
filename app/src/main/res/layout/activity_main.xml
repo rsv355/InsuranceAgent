@@ -1,10 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:background="#E9E9E9"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/ad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:background="#2196F3"
@@ -396,4 +407,30 @@
 
     </LinearLayout>
 
-</LinearLayout>
+
+    </LinearLayout>
+   </ScrollView>
+
+
+    <RelativeLayout
+        android:background="#E9E9E9"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-1878227272753934/6884990405" />
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>
