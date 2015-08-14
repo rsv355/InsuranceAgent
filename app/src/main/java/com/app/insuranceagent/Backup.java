@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 public class Backup extends ActionBarActivity {
     TextView txtTitle;
-    ImageView imgBack;
+    ImageView imgBack, newBackup;
     ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +22,12 @@ public class Backup extends ActionBarActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
 
-        listView= (ListView)findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listView);
 
-        imgBack = (ImageView)findViewById(R.id.imgBack);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
+        newBackup = (ImageView) findViewById(R.id.newBackup);
 
 
         imgBack.setOnClickListener(new View.OnClickListener() {

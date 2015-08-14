@@ -169,9 +169,6 @@ public class SearchPolicies extends ActionBarActivity {
     }
 
 
-
-
-
     void processFetchPolicy() {
 
         polObj = new ArrayList<>();

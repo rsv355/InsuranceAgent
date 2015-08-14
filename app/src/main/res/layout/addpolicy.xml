@@ -250,6 +250,7 @@
                 android:drawablePadding="5dp"
                 app:met_textColorHint="#909599"
                 android:layout_marginLeft="16dp"
+                android:focusable="false"
                 android:layout_marginRight="16dp"
                 android:id="@+id/edDate"
                 android:layout_weight="1"

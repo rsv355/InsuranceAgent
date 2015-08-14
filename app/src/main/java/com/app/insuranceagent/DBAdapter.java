@@ -377,7 +377,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         return cursor;
     }
 
-    public long insertClaims(String pname,String date,String amt,String ampuntPaid,String time,String fullDate,String notes)
+    public long insertClaims(String pname,String date,String amt,String ampuntPaid,String status,String fullDate,String notes)
     {
         ContentValues initialValues = new ContentValues();
 
@@ -385,7 +385,7 @@ public class DBAdapter { public static final String KEY_ROWID = "_id";
         initialValues.put("date", date);//2
         initialValues.put("amount", amt);//3
         initialValues.put("amount_paid", ampuntPaid);//3
-        initialValues.put("status", time);//3
+        initialValues.put("status", status);//3
         initialValues.put("fullfillment_date", fullDate);//3
         initialValues.put("clm_notes", notes);//3
 
