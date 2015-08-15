@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +32,13 @@
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:paddingLeft="6dp"
+        android:text="Create Backup" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +69,6 @@
     </LinearLayout>
 
     <View
-
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#909599" />
@@ -71,7 +77,9 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#D8DFE6" />
-
+        android:divider="#ffffff"
+        android:dividerHeight="1dp"
+        android:background="#ffffff"
+        android:padding="6dp" />
 
 </LinearLayout>

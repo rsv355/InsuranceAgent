@@ -1,11 +1,13 @@
 package com.app.insuranceagent;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.insuranceagent.model.BackupModel;
 
@@ -37,8 +41,9 @@ public class Backup extends ActionBarActivity {
     boolean success;
     ArrayList<BackupModel> backupList = new ArrayList<>();
     CustomAdapter adapter;
-    int day, month, year;
+    int day, month, year, hour, min;
     String date;
+    EditText edSearchBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +54,24 @@ public class Backup extends ActionBarActivity {
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
-        date = day + "-" + (month + 1) + "-" + year;
+        hour = cal.get(Calendar.HOUR);
+        min = cal.get(Calendar.MINUTE);
+        date = day + "-" + (month + 1) + "-" + year + "-" + hour + ":" + min;
 
         init();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String inPath = Environment.getExternalStorageDirectory() + "/InsuranceBackup/";
-                String inFile = parent.getItemAtPosition(position) + "";
-                String outPath = getDatabasePath("MyDB1").toString();
-                copyFile(inPath, inFile, outPath);
-            }
-        });
+        edSearchBox.setText("Insurance-Backup_" + date);
 
         newBackup.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
+                                             Calendar cal = Calendar.getInstance();
+                                             day = cal.get(Calendar.DAY_OF_MONTH);
+                                             month = cal.get(Calendar.MONTH);
+                                             year = cal.get(Calendar.YEAR);
+                                             hour = cal.get(Calendar.HOUR);
+                                             min = cal.get(Calendar.MINUTE);
+                                             date = day + "-" + (month + 1) + "-" + year + "-" + hour + ":" + min;
                                              try {
                                                  File file = new File(Environment.getExternalStorageDirectory() + "/InsuranceBackup");
                                                  if (file.exists()) {
@@ -74,24 +80,21 @@ public class Backup extends ActionBarActivity {
                                                      success = file.mkdir();
                                                  }
                                                  if ((success) && file.canWrite()) {
-                                                     Log.e("## sagar", " ** IF OUT");
                                                      String backupDBPath = "Insurance-Backup_" + date;
                                                      File currentDB = getDatabasePath("MyDB1");
                                                      File backupDB = new File(file, backupDBPath);
 
                                                      if (currentDB.exists()) {
-                                                         Log.e("## sagar", " ** IF IN");
                                                          FileChannel src = new FileInputStream(currentDB).getChannel();
                                                          FileChannel dst = new FileOutputStream(backupDB).getChannel();
                                                          dst.transferFrom(src, 0, src.size());
                                                          src.close();
                                                          dst.close();
-                                                         adapter.notifyDataSetChanged();
+                                                         Toast.makeText(Backup.this, "Backup created successfully.", Toast.LENGTH_LONG).show();
+                                                         restartActivity();
                                                      } else {
-                                                         Log.e("## sagar", " ** ELSE IN");
                                                      }
                                                  } else {
-                                                     Log.e("## sagar", " ** ELSE OUT");
                                                  }
 
                                              } catch (
@@ -99,7 +102,6 @@ public class Backup extends ActionBarActivity {
                                                      )
 
                                              {
-                                                 Log.e("#### exc", e.toString());
                                              }
                                          }
                                      }
@@ -110,7 +112,7 @@ public class Backup extends ActionBarActivity {
     private void init() {
 
         listView = (ListView) findViewById(R.id.listView);
-
+        edSearchBox = (EditText) findViewById(R.id.edSearchBox);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         newBackup = (ImageView) findViewById(R.id.newBackup);
 
@@ -155,7 +157,7 @@ public class Backup extends ActionBarActivity {
 
 
             in = new FileInputStream(inputPath + inputFile);
-            out = new FileOutputStream(outputPath + inputFile);
+            out = new FileOutputStream(outputPath);
 
             byte[] buffer = new byte[1024];
             int read;
@@ -223,38 +225,125 @@ public class Backup extends ActionBarActivity {
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BackupModel model = backupList.get(position);
-                    File f = new File(Environment.getExternalStorageDirectory() + "/InsuranceBackup/" + model.getFileName());
-                    if (f.exists()) {
-                        f.delete();
-                        if (Build.VERSION.SDK_INT >= 11) {
-                            recreate();
-                        } else {
-                            Intent intent = getIntent();
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            finish();
-                            overridePendingTransition(0, 0);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Are you sure to delete this ")
+                            .setNegativeButton("YES",
+                                    new DialogInterface.OnClickListener() {
 
-                            startActivity(intent);
-                            overridePendingTransition(0, 0);
-                        }
-                    }
+                                        @Override
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            // TODO Auto-generated method stub
+                                            BackupModel model = backupList.get(position);
+                                            File f = new File(Environment.getExternalStorageDirectory() + "/InsuranceBackup/" + model.getFileName());
+                                            if (f.exists()) {
+                                                f.delete();
+                                                if (Build.VERSION.SDK_INT >= 11) {
+                                                    recreate();
+                                                } else {
+                                                    restartActivity();
+                                                }
+                                            }
+                                        }
+                                    })
+                            .setPositiveButton("NO",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            // TODO Auto-generated method stub
+                                            dialog.dismiss();
+                                        }
+                                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
 
             holder.restore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BackupModel model = backupList.get(position);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Are you sure to restore your database from this backup?")
+                            .setNegativeButton("YES",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            // TODO Auto-generated method stub
+                                            BackupModel model = backupList.get(position);
+                                            String inPath = Environment.getExternalStorageDirectory() + "/InsuranceBackup/";
+                                            String inFile = model.getFileName();
+                                            String outPath = getDatabasePath("MyDB1").toString();
+                                            copyFile(inPath, inFile, outPath);
+                                        }
+                                    })
+                            .setPositiveButton("NO",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            // TODO Auto-generated method stub
+                                            dialog.dismiss();
+                                        }
+                                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
                 }
             });
 
             return convertView;
         }
 
+        private void alert() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Are you sure to delete this ")
+                    .setNegativeButton("YES",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    // TODO Auto-generated method stub
+                                    Intent intent = new Intent(
+                                            Intent.ACTION_MAIN);
+                                    intent.addCategory(Intent.CATEGORY_HOME);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            })
+                    .setPositiveButton("NO",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    // TODO Auto-generated method stub
+                                    dialog.dismiss();
+
+                                }
+                            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+
         class ViewHolder {
             private TextView text;
             private ImageView delete, restore;
         }
+    }
+
+    private void restartActivity() {
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }
