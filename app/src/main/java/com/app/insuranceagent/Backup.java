@@ -92,20 +92,14 @@ public class Backup extends ActionBarActivity {
                                                          dst.close();
                                                          Toast.makeText(Backup.this, "Backup created successfully.", Toast.LENGTH_LONG).show();
                                                          restartActivity();
-                                                     } else {
                                                      }
-                                                 } else {
                                                  }
 
-                                             } catch (
-                                                     Exception e
-                                                     )
-
-                                             {
+                                             } catch (Exception e) {
+                                                 e.printStackTrace();
                                              }
                                          }
                                      }
-
         );
     }
 
