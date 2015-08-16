@@ -14,5 +14,6 @@ public class SubClaim {
     public String clmStatus;
     public String clmFulfilDate;
     public String clmNotes;
+    public byte[] clmImage;
 
 }

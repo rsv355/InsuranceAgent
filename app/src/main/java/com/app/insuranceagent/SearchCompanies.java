@@ -84,6 +84,7 @@ public class SearchCompanies extends ActionBarActivity {
                 i1.putExtra("cmpID", cmpObj.get(i).cmpID);
                 i1.putExtra("cmpName", cmpObj.get(i).cmpName);
                 i1.putExtra("cmpAddress", cmpObj.get(i).cmpAddress);
+                i1.putExtra("cmpContact", cmpObj.get(i).cmpContact);
                 i1.putExtra("cmpUrl", cmpObj.get(i).cmpWebURL);
                 i1.putExtra("cmpNotes", cmpObj.get(i).cmpNotes);
                 startActivity(i1);
@@ -98,8 +99,9 @@ public class SearchCompanies extends ActionBarActivity {
         subCmp.cmpID = c.getInt(0);
         subCmp.cmpName = c.getString(1);
         subCmp.cmpAddress = c.getString(2);
-        subCmp.cmpWebURL = c.getString(3);
-        subCmp.cmpNotes = c.getString(4);
+        subCmp.cmpContact = c.getString(3);
+        subCmp.cmpWebURL = c.getString(4);
+        subCmp.cmpNotes = c.getString(5);
 
 
         cmpObj.add(subCmp);

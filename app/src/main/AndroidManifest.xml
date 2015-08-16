@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.insuranceagent" >
-
+    package="com.app.insuranceagent">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -12,12 +12,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,107 +25,93 @@
             </intent-filter>
         </activity>
         <activity
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".SearchCompanies"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".NewCompany"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".SearchAgents"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".NewAgents"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".SearchClients"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".NewClients"
-            android:screenOrientation="portrait"/>
-
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".SearchAppointments"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".NewAppointments"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".SearchPolicies"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".NewPolicies"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".SearchClaims"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".NewClaims"
-            android:screenOrientation="portrait"/>
-
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".Statisitcs"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".Backup"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".Products"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
         <activity
-            android:screenOrientation="portrait"
             android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,11 @@
 package com.app.insuranceagent;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,12 +18,13 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class NewAgents extends ActionBarActivity {
     TextView txtTitle, txtSubHeading;
-    ImageView imgClose, imgBack, imgSave;
+    ImageView imgClose, imgBack, imgSave, imgImport;
     ListView listView;
     MaterialEditText edName, edPhone, edAddress, edNotes;
     String tempName, tempAddress, tempPhone, tempNotes;
     int tempId;
     DBAdapter db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +32,14 @@ public class NewAgents extends ActionBarActivity {
         db = new DBAdapter(NewAgents.this);
 
         init();
+
+        imgImport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 100);
+            }
+        });
 
 
         tempId = getIntent().getIntExtra("agentID", 1);
@@ -46,8 +60,38 @@ public class NewAgents extends ActionBarActivity {
         }
     }
 
-    private void init(){imgClose = (ImageView) findViewById(R.id.imgClose);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                Uri contact = data.getData();
+                ContentResolver cr = getContentResolver();
+
+                Cursor c = managedQuery(contact, null, null, null, null);
+                //      c.moveToFirst();
+
+                while (c.moveToNext()) {
+                    String id = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+
+                    if (Integer.parseInt(c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
+
+                        while (pCur.moveToNext()) {
+                            String phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            edPhone.setText(phone);
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void init() {
+        imgClose = (ImageView) findViewById(R.id.imgClose);
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgImport = (ImageView) findViewById(R.id.imgImport);
         imgSave = (ImageView) findViewById(R.id.imgSave);
 
         edName = (MaterialEditText) findViewById(R.id.edName);

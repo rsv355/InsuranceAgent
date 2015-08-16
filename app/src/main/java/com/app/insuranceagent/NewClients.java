@@ -1,6 +1,11 @@
 package com.app.insuranceagent;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,7 +21,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class NewClients extends ActionBarActivity {
     TextView txtTitle, txtSubHeading;
-    ImageView imgClose, imgBack, imgSave;
+    ImageView imgClose, imgBack, imgSave, imgImportCell, imgImportHome, imgImportWork, imgImportEmergency, imgImportEmergencyPhone;
     ListView listView;
     MaterialSpinner spCType, spGender, spMStatus;
     String[] ClientType = {"Individual", "Company (fleet)"};
@@ -70,7 +75,6 @@ public class NewClients extends ActionBarActivity {
 
             edNotes.setText(temp_edNotes);
 
-
         }
     }
 
@@ -80,6 +84,12 @@ public class NewClients extends ActionBarActivity {
         imgSave = (ImageView) findViewById(R.id.imgSave);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgClose = (ImageView) findViewById(R.id.imgClose);
+        imgImportCell = (ImageView) findViewById(R.id.imgImportCell);
+        imgImportHome = (ImageView) findViewById(R.id.imgImportHome);
+        imgImportWork = (ImageView) findViewById(R.id.imgImportWork);
+        imgImportEmergency = (ImageView) findViewById(R.id.imgImportEmergency);
+        imgImportEmergencyPhone = (ImageView) findViewById(R.id.imgImportEmergencyPhone);
+
 
         spCType = (MaterialSpinner) findViewById(R.id.spCType);
         spGender = (MaterialSpinner) findViewById(R.id.spGender);
@@ -113,6 +123,45 @@ public class NewClients extends ActionBarActivity {
             }
         });
 
+        imgImportCell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 100);
+            }
+        });
+
+        imgImportHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 200);
+            }
+        });
+
+        imgImportWork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 300);
+            }
+        });
+
+        imgImportEmergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 400);
+            }
+        });
+
+        imgImportEmergencyPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 500);
+            }
+        });
 
         ArrayAdapter<String> ClientTypeadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ClientType);
         ClientTypeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -146,7 +195,56 @@ public class NewClients extends ActionBarActivity {
             }
         });
 
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 100:
+                    pickContact(data, edCellPhone);
+                    break;
+
+                case 200:
+                    pickContact(data, edHomePhone);
+                    break;
+
+                case 300:
+                    pickContact(data, edWorkPhone);
+                    break;
+
+                case 400:
+                    pickContact(data, edEmergencycontact);
+                    break;
+
+                case 500:
+                    pickContact(data, edEmergencyPhone);
+                    break;
+            }
+        }
+    }
+
+    private void pickContact(Intent data, MaterialEditText editText) {
+        Uri contact = data.getData();
+        ContentResolver cr = getContentResolver();
+
+        Cursor c = managedQuery(contact, null, null, null, null);
+        //      c.moveToFirst();
+
+        while (c.moveToNext()) {
+            String id = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+
+            if (Integer.parseInt(c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
+
+                while (pCur.moveToNext()) {
+                    String phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    editText.setText(phone);
+                }
+            }
+
+        }
     }
 
     private void processUpdate() {
@@ -171,7 +269,7 @@ public class NewClients extends ActionBarActivity {
 
 
         db.open();
-        if (db.updateClients(mainID,cId, Name, client_type, client_birth, client_gender, client_marital_stat, client_email, client_address,
+        if (db.updateClients(mainID, cId, Name, client_type, client_birth, client_gender, client_marital_stat, client_email, client_address,
                 client_cell_phone, client_home_phone, client_work_phone, client_eme_cont, client_eme_phone, Notes))
             Toast.makeText(NewClients.this, "Record Updated !!!", Toast.LENGTH_SHORT).show();
         else

@@ -9,6 +9,7 @@ public class SubCompanies {
     public Integer cmpID;
     public String cmpName;
     public String cmpAddress;
+    public String cmpContact;
     public String cmpWebURL;
     public String cmpNotes;
 

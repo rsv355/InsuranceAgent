@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,8 @@ public class SearchClaims extends ActionBarActivity {
                 i1.putExtra("clmFulfilDate", claimObj.get(i).clmFulfilDate);
                 i1.putExtra("clmStatus", claimObj.get(i).clmStatus);
                 i1.putExtra("clmNotes", claimObj.get(i).clmNotes);
+                i1.putExtra("clmImage", claimObj.get(i).clmImage);
+                Log.e("clmImage", claimObj.get(i).clmImage + "---");
 
                 startActivity(i1);
             }
@@ -141,6 +144,7 @@ public class SearchClaims extends ActionBarActivity {
         subClaim.clmStatus = c.getString(5);
         subClaim.clmFulfilDate = c.getString(6);
         subClaim.clmNotes = c.getString(7);
+        subClaim.clmImage = c.getBlob(8);
 
         claimObj.add(subClaim);
 

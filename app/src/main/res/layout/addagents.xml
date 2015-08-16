@@ -105,20 +105,34 @@
                 app:met_maxCharacters="20"
                 app:met_primaryColor="?colorAccent"
                 app:met_singleLineEllipsis="true" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                app:met_textColorHint="#909599"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:id="@+id/edPhone"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone"
-                android:textSize="14sp"
-                app:met_baseColor="#494949"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="?colorAccent"
-                app:met_singleLineEllipsis="true" />
+                android:orientation="horizontal">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_textColorHint="#909599"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/edPhone"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.85"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone"
+                    android:textSize="14sp"
+                    app:met_baseColor="#494949"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="?colorAccent"
+                    app:met_singleLineEllipsis="true" />
+
+                <ImageView
+                    android:id="@+id/imgImport"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.15"
+                    android:src="@drawable/ic_action_perm_contact_cal" />
+            </LinearLayout>
+
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 app:met_textColorHint="#909599"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.ads.AdRequest;
@@ -13,6 +14,7 @@ import com.google.android.gms.ads.AdView;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     LinearLayout linearProducts, linearStats, linearBackup, linearClaims, linearAppointments, linearClients, linearComp, linearAgents, linearPolicies;
     AdRequest adRequest;
+    ImageView imgSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void init() {
+        imgSettings = (ImageView) findViewById(R.id.imgSettings);
         linearClients = (LinearLayout) findViewById(R.id.linearClients);
         linearComp = (LinearLayout) findViewById(R.id.linearComp);
         linearAgents = (LinearLayout) findViewById(R.id.linearAgents);
@@ -53,6 +56,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         linearClients.setOnClickListener(this);
         linearComp.setOnClickListener(this);
         linearAgents.setOnClickListener(this);
+
+        imgSettings.setOnClickListener(this);
     }
 
     @Override
@@ -88,7 +93,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivity(i6);
                 break;
 
-
             case R.id.linearStats:
                 Intent i7 = new Intent(this, Statisitcs.class);
                 startActivity(i7);
@@ -102,6 +106,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Intent i9 = new Intent(this, Products.class);
                 startActivity(i9);
                 break;
+            case R.id.imgSettings:
+                Intent i10 = new Intent(this, Settings.class);
+                startActivity(i10);
+                break;
+
         }
     }
 }
